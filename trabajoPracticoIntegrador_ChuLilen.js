@@ -19,7 +19,7 @@ b) Crear un array de objetos llamado usuarios con al menos 5 usuarios. Cada usua
 */
 
 /* Un array es una estructura de datos que sirve para guardar varios valores relacionados en una sola variable. Un array puede guardar cualquier tipo de dato.
-Para este ejercicio se crean dos arrays, uno que contiene libros y otro va a contener usuarios. Cada elemento es un objeto con atributos concretos dados en el enunciado, los tipos de dato de los atributos son string, number y boolean. También hay un atributo que contiene array, una estructura de datos.*/
+Para este ejercicio se crean dos arrays, uno que contiene libros y otro va a contener usuarios. Cada elemento es un objeto con propiedades concretas dadas en el enunciado, los tipos de datos de las propiedades son string, number, boolean (simples) y array (complejo).*/
 
 //Array de objetos Libros
 let libros = [
@@ -146,6 +146,87 @@ b) Crear una función buscarLibro(criterio, valor) que permita buscar libros por
 c) Desarrollar una función ordenarLibros(criterio) que ordene los libros por título o año utilizando el algoritmo de ordenamiento burbuja (bubble sort) y luego muestre los libros ordenados en la consola.
 d) Desarrollar una función borrarLibro(id) que elimine el libro que se le pase por parámetro.
 */
+
+//Agregar un nuevo libro al array libros. Se utiliza el método push, que agrega un elemento al final del array.
+function agregarLibro(id, titulo, autor, anio, genero) {
+    // Se crea un objeto con los datos del nuevo libro 
+    let nuevoLibro = {
+        id: id,
+        titulo: titulo,
+        autor: autor,
+        anio: anio,
+        genero: genero,
+        disponible: true
+    }
+    // Se agrega el objeto libro al array libros
+    libros.push(nuevoLibro);
+};
+
+//Buscar libros por título, autor o género. Se hace una búsqueda lineal, es decir, se recorre la lista de libros elemento por elemento (en orden), hasta encontrar lo que busca o hasta llegar al final. Se genera un nuevo array con los resultados de la búsqueda.
+
+function buscarLibro(criterio, valor) {
+    // Array donde se guardan los resultados de la búsqueda
+    let resultados = [];
+    // Recorremos el array de libros uno por uno
+    for (let i=0; i<libros.length; i++) {
+        // Comparamos el valor del criterio indicado con el valor buscado
+        if (libros[i][criterio] === valor) {
+            // Si hay coincidencia, se agrega el libro al array de resultados
+            resultados.push(libros[i]);
+        }
+    }
+    // Se devuelve el array con los libros encontrados
+    return resultados;
+}
+
+/*
+buscarLibro("autor", "J. R. R. Tolkien");
+buscarLibro("genero", "Fantasía");
+*/
+
+//Ordenar los libros por título o año utilizando el algoritmo de ordenamiento burbuja (bubble sort), luego se muestra los libros ordenados en la consola. El método de burbuja compara los elementos de a pares y los intercambia si están en el orden incorrecto, repitiendo el proceso hasta que la lista queda ordenada.
+
+function ordenarLibros(criterio) {
+    let n = libros.length;
+    // Bucle externo que controla cuántas veces recorremos la lista completa de libros.
+    for (let i = 0; i < n - 1; i++) {
+        // Bucle interno que compara de a pares. A medida que pasan las vueltas, los mayores se acomodan al final.
+        for (let j = 0; j < n - i - 1; j++) {
+            //Si el número actual es mayor que el siguiente, están desordenados.
+            if (libros[j][criterio] > libros[j + 1][criterio]) {
+                // Se hace uso de una variable auxiliar para guardar el valor del número actual temporalmente.
+                let aux = libros[j];
+                libros[j] = libros[j + 1];
+                libros[j + 1] = aux;
+            }
+
+        }
+    }
+
+    // Mostrar libros ya ordenados
+    console.log("Libros ordenados por " + criterio + ":");
+    console.log(libros);
+}
+
+/*
+ordenarLibros("titulo"); // ordena alfabéticamente
+ordenarLibros("anio");   // ordena por año
+*/
+
+// Elimina un libro del array libros según el id recibido
+
+function borrarLibro(id) {
+    //Recorremos el array de libros uno por uno
+    for (let i = 0; i < libros.length; i++) {
+        //Comparamos el id del libro actual con el id recibido por parámetro, si los ids coinciden, eliminamos ese libro del array
+        if (libros[i].id === id) {
+            // splice(i, 1) borra 1 elemento en la posición i
+            libros.splice(i, 1);
+            // Cortamos el bucle porque ya encontramos y borramos el libro
+            break;
+        }
+    }
+}
 
 /*
 3. Gestión de Usuarios
