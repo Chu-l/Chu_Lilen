@@ -1,3 +1,7 @@
+const prompt = require('prompt-sync')();
+
+//Objetivo: Desarrollar un sistema de gestión para una biblioteca que permita administrar libros y usuarios, aplicando los conceptos fundamentales de JavaScript vistos en el módulo.
+
 /*
 1. Estructura de Datos
 a) Crear un array de objetos llamado libros que contenga al menos 10 libros. Cada libro debe tener las siguientes propiedades:
@@ -13,6 +17,127 @@ b) Crear un array de objetos llamado usuarios con al menos 5 usuarios. Cada usua
 ✔ email (string)
 ✔ librosPrestados (array de ids de libros).
 */
+
+/* Un array es una estructura de datos que sirve para guardar varios valores relacionados en una sola variable. Un array puede guardar cualquier tipo de dato.
+Para este ejercicio se crean dos arrays, uno que contiene libros y otro va a contener usuarios. Cada elemento es un objeto con atributos concretos dados en el enunciado, los tipos de dato de los atributos son string, number y boolean. También hay un atributo que contiene array, una estructura de datos.*/
+
+//Array de objetos Libros
+let libros = [
+    {
+        id: 1,
+        titulo: "Harry Potter y la piedra filosofal",
+        autor: "J. K. Rowling",
+        anio: 1997,
+        genero: "Fantasía",
+        disponible: true
+    },
+    {
+        id: 2,
+        titulo: "La espada rota",
+        autor: "Tad Williams",
+        anio: 1988,
+        genero: "Fantasía",
+        disponible: true
+    },
+    {
+        id: 3,
+        titulo: "El señor de los anillos",
+        autor: "J. R. R. Tolkien",
+        anio: 1954,
+        genero: "Fantasía épica",
+        disponible: true
+    },
+    {
+        id: 4,
+        titulo: "Las ventajas de ser invisible",
+        autor: "Stephen Chbosky",
+        anio: 1999,
+        genero: "Juvenil",
+        disponible: false
+    },
+    {
+        id: 5,
+        titulo: "Los pilares de la Tierra",
+        autor: "Ken Follett",
+        anio: 1989,
+        genero: "Histórica",
+        disponible: true
+    },
+    {
+        id: 6,
+        titulo: "El trono de huesos",
+        autor: "Tad Williams",
+        anio: 2017,
+        genero: "Fantasía",
+        disponible: true
+    },
+    {
+        id: 7,
+        titulo: "Las crónicas de Narnia",
+        autor: "C. S. Lewis",
+        anio: 1950,
+        genero: "Fantasía",
+        disponible: true
+    },
+    {
+        id: 8,
+        titulo: "Eragon",
+        autor: "Christopher Paolini",
+        anio: 2002,
+        genero: "Fantasía",
+        disponible: false
+    },
+    {
+        id: 9,
+        titulo: "El elfo oscuro",
+        autor: "R. A. Salvatore",
+        anio: 1990,
+        genero: "Fantasía",
+        disponible: true
+    },
+    {
+        id: 10,
+        titulo: "Crepúsculo",
+        autor: "Stephenie Meyer",
+        anio: 2005,
+        genero: "Fantasía romántica",
+        disponible: false
+    }
+];
+
+//Array de objetos Usuario
+let usuarios = [
+    {
+        id: 1,
+        nombre: "Ana Deferrari",
+        email: "ana94@gmail.com",
+        librosPrestados: [3, 5]
+    },
+    {
+        id: 2,
+        nombre: "Lucio Giraldez",
+        email: "lgiraldez@yahoo.com.ar",
+        librosPrestados: []
+    },
+    {
+        id: 3,
+        nombre: "Lucía Hitz",
+        email: "lucia.hitz@gmail.com",
+        librosPrestados: [9]
+    },
+    {
+        id: 4,
+        nombre: "Bastian Díaz",
+        email: "bast_d@gmail.com",
+        librosPrestados: [1, 6]
+    },
+    {
+        id: 5,
+        nombre: "Ho Win Chu",
+        email: "howin@hotmail.com",
+        librosPrestados: []
+    }
+];
 
 /*
 2. Funciones de Gestión de Libros

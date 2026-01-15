@@ -1,0 +1,23 @@
+{
+  "name": "chu_lilen",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Chu-l/Chu_Lilen#readme",
+  "bugs": {
+    "url": "https://github.com/Chu-l/Chu_Lilen/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chu-l/Chu_Lilen.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "trabajoPracticoIntegrador_ChuLilen.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
