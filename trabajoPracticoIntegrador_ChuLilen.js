@@ -2,6 +2,8 @@ const prompt = require('prompt-sync')();
 
 //Objetivo: Desarrollar un sistema de gestión para una biblioteca que permita administrar libros y usuarios, aplicando los conceptos fundamentales de JavaScript vistos en el módulo.
 
+//•┈┈┈••✦ EJERCICIO 1 ✦••┈┈┈•//
+
 /*
 1. Estructura de Datos
 a) Crear un array de objetos llamado libros que contenga al menos 10 libros. Cada libro debe tener las siguientes propiedades:
@@ -139,6 +141,8 @@ let usuarios = [
     }
 ];
 
+//•┈┈┈••✦ EJERCICIO 2 ✦••┈┈┈•//
+
 /*
 2. Funciones de Gestión de Libros
 a) Implementar una función agregarLibro(id, titulo, autor, anio, genero) que agregue un nuevo libro al array libros.
@@ -147,7 +151,7 @@ c) Desarrollar una función ordenarLibros(criterio) que ordene los libros por t�
 d) Desarrollar una función borrarLibro(id) que elimine el libro que se le pase por parámetro.
 */
 
-//Agregar un nuevo libro al array libros. Se utiliza el método push, que agrega un elemento al final del array.
+//a- Agregar un nuevo libro al array libros. Se utiliza el método push, que agrega un elemento al final del array.
 function agregarLibro(id, titulo, autor, anio, genero) {
     // Se crea un objeto con los datos del nuevo libro 
     let nuevoLibro = {
@@ -162,7 +166,13 @@ function agregarLibro(id, titulo, autor, anio, genero) {
     libros.push(nuevoLibro);
 };
 
-//Buscar libros por título, autor o género. Se hace una búsqueda lineal, es decir, se recorre la lista de libros elemento por elemento (en orden), hasta encontrar lo que busca o hasta llegar al final. Se genera un nuevo array con los resultados de la búsqueda.
+//*****Probando*****//
+/*agregarLibro(11, "El Cid", "Anónimo", 1200, "Épica");
+agregarLibro(12, "La isla del tesoro", "Robert Louis Stevenson", 1883, "Aventura");
+// Mostrar el contenido del array para comprobar
+console.log(libros);*/
+
+//b- Buscar libros por título, autor o género. Se hace una búsqueda lineal, es decir, se recorre la lista de libros elemento por elemento (en orden), hasta encontrar lo que busca o hasta llegar al final. Se genera un nuevo array con los resultados de la búsqueda.
 
 function buscarLibro(criterio, valor) {
     // Array donde se guardan los resultados de la búsqueda
@@ -179,12 +189,13 @@ function buscarLibro(criterio, valor) {
     return resultados;
 }
 
-/*
-buscarLibro("autor", "J. R. R. Tolkien");
-buscarLibro("genero", "Fantasía");
-*/
+//*****Probando*****//
+/*//Búsqueda por autor
+console.log(buscarLibro("autor", "J. R. R. Tolkien"));
+//Búsqueda por género
+console.log(buscarLibro("genero", "Fantasía"));*/
 
-//Ordenar los libros por título o año utilizando el algoritmo de ordenamiento burbuja (bubble sort), luego se muestra los libros ordenados en la consola. El método de burbuja compara los elementos de a pares y los intercambia si están en el orden incorrecto, repitiendo el proceso hasta que la lista queda ordenada.
+//c- Ordenar los libros por título o año utilizando el algoritmo de ordenamiento burbuja (bubble sort), luego se muestra los libros ordenados en la consola. El método de burbuja compara los elementos de a pares y los intercambia si están en el orden incorrecto, repitiendo el proceso hasta que la lista queda ordenada.
 
 function ordenarLibros(criterio) {
     let n = libros.length;
@@ -192,9 +203,9 @@ function ordenarLibros(criterio) {
     for (let i = 0; i < n - 1; i++) {
         // Bucle interno que compara de a pares. A medida que pasan las vueltas, los mayores se acomodan al final.
         for (let j = 0; j < n - i - 1; j++) {
-            //Si el número actual es mayor que el siguiente, están desordenados.
+            // Si el valor del criterio del libro actual es mayor que el siguiente, están desordenados.
             if (libros[j][criterio] > libros[j + 1][criterio]) {
-                // Se hace uso de una variable auxiliar para guardar el valor del número actual temporalmente.
+                // Se utiliza una variable auxiliar para guardar temporalmente el libro actual y poder intercambiarlo.
                 let aux = libros[j];
                 libros[j] = libros[j + 1];
                 libros[j + 1] = aux;
@@ -208,12 +219,13 @@ function ordenarLibros(criterio) {
     console.log(libros);
 }
 
-/*
-ordenarLibros("titulo"); // ordena alfabéticamente
-ordenarLibros("anio");   // ordena por año
-*/
+//*****Probando*****//
+//console.log("Antes de ordenar:");
+//console.log(libros);
+//ordenarLibros("titulo"); // ordena alfabéticamente
+//ordenarLibros("anio"); // ordena por año
 
-// Elimina un libro del array libros según el id recibido
+//d- Elimina un libro del array libros según el id recibido
 
 function borrarLibro(id) {
     //Recorremos el array de libros uno por uno
@@ -228,6 +240,15 @@ function borrarLibro(id) {
     }
 }
 
+//*****Probando*****//
+/*console.log("Antes de borrar:");
+console.log(libros);
+borrarLibro(3);
+console.log("Después de borrar:");
+console.log(libros);*/
+
+//•┈┈┈••✦ EJERCICIO 3 ✦••┈┈┈•//
+
 /*
 3. Gestión de Usuarios
 a) Implementar una función registrarUsuario(nombre, email) que agregue un nuevo usuario al array usuarios.
@@ -236,11 +257,90 @@ c) Crear una función buscarUsuario(email) que devuelva la información de un us
 d) Implementar una función borrarUsuario(nombre, email) que elimine el usuario seleccionado.
 */
 
+//a- La función crea un objeto usuario con los datos recibidos y lo agrega al array usuarios utilizando el método push.
+
+function registrarUsuario(nombre, email) {
+    // Se crea un objeto con los datos del nuevo usuario
+    let nuevoUsuario = {
+        id: usuarios.length + 1, // genera un id nuevo
+        nombre: nombre,
+        email: email,
+        librosPrestados: []
+    }
+    // Se agrega el usuario al array usuarios
+    usuarios.push(nuevoUsuario);
+};
+
+//*****Probando*****//
+/*console.log("Usuarios antes:");
+console.log(usuarios);
+registrarUsuario("Ailin Aguilar", "ailinca@gmail.com");
+console.log("Usuarios después:");
+console.log(usuarios);*/
+
+//b- La función no recibe parámetros, ya que no necesita información adicional para ejecutarse. Retorna el array "usuarios" con todos los usuarios registrados.
+
+function mostrarTodosLosUsuarios() {
+    // Devuelve el array completo de usuarios
+    return usuarios;
+};
+
+//*****Probando*****//
+/*console.log(mostrarTodosLosUsuarios());*/
+
+//c- Función que busca un usuario en el array de usuarios según su email y devuelve su información. Si no existe, retorna null.
+
+function buscarUsuario(email) {
+    // Recorremos el array de usuarios uno por uno con un for
+    for (let i=0; i<usuarios.length; i++) {
+        // Comparamos el email del usuario actual con el email recibido
+        if (usuarios[i].email === email) {
+            // Si coincide, devolvemos ese usuario
+            return usuarios[i];
+        }
+    }
+    // Si no se encuentra ningún usuario, devolvemos null
+    return null;
+};
+
+//*****Probando*****//
+/*console.log("Búsqueda del primer usuario: ");
+console.log(buscarUsuario("lucia.hitz@gmail.com"));
+console.log("Búsqueda del segundo usuario: ");
+console.log(buscarUsuario("null@hotmail.com"));*/
+
+//d- Elimina un usuario del array usuarios según nombre y email
+
+function borrarUsuario(nombre, email) {
+    // findIndex recorre el array usuarios y devuelve la posición (índice) del primer usuario que cumpla la condición. Si no encuentra ninguno, devuelve -1.
+    let indice = usuarios.findIndex(function(usuario) {
+        // En cada vuelta comparamos el nombre y el email del usuario actual con los valores recibidos por parámetro
+        return usuario.nombre === nombre && usuario.email === email;
+    });
+
+    // Verificamos si el usuario fue encontrado. Si se encuentra el usuario, findIndex es distinto a -1.
+    if (indice !== -1) {
+        // Eliminamos el usuario del array usando splice, elimina 1 elemento del array comenzando desde la posición indicada.
+        usuarios.splice(indice, 1);
+    }
+};
+
+//*****Probando*****//
+/*console.log("Usuarios antes:")
+console.log(usuarios);
+borrarUsuario("Lucía Hitz", "lucia.hitz@gmail.com");
+console.log("Usuarios después:");
+console.log(usuarios);*/
+
+//•┈┈┈••✦ EJERCICIO 4 ✦••┈┈┈•//
+
 /*
 4. Sistema de Préstamos
 a) Desarrollar una función prestarLibro(idLibro, idUsuario) que marque un libro como no disponible y lo agregue a la lista de libros prestados del usuario.
 b) Implementar una función devolverLibro(idLibro, idUsuario) que marque un libro como disponible y lo elimine de la lista de libros prestados del usuario.
 */
+
+//•┈┈┈••✦ EJERCICIO 5 ✦••┈┈┈•//
 
 /*
 5. Reportes
@@ -251,11 +351,15 @@ a) Crear una función generarReporteLibros() que utilice métodos avanzados de a
 ✔ Libro más antiguo y más nuevo
 */
 
+//•┈┈┈••✦ EJERCICIO 6 ✦••┈┈┈•//
+
 /*
 6. Identificación Avanzada de libros
 a) Implementar una función librosConPalabrasEnTitulo() que identifique y muestre todos los libros cuyo título contiene más de una palabra (no títulos que contengan números ni otros caracteres).
 b) La función debe devolver un array con los títulos de esos libros y mostrarlo en la consola.
 */
+
+//•┈┈┈••✦ EJERCICIO 7 ✦••┈┈┈•//
 
 /*
 7. Cálculos Estadísticos
@@ -265,6 +369,8 @@ a) Desarrollar una función calcularEstadisticas() que utilice el objeto Math pa
 ✔ Diferencia en años entre el libro más antiguo y el más nuevo.
 */
 
+//•┈┈┈••✦ EJERCICIO 8 ✦••┈┈┈•//
+
 /*
 8. Manejo de Cadenas
 a) Crear una función normalizarDatos() que utilice métodos de strings para:
@@ -272,6 +378,8 @@ a) Crear una función normalizarDatos() que utilice métodos de strings para:
 ✔ Eliminar espacios en blanco al inicio y final de los nombres de autores.
 ✔ Formatear los emails de los usuarios a minúsculas.
 */
+
+//•┈┈┈••✦ EJERCICIO 9 ✦••┈┈┈•//
 
 /*
 9. Interfaz de Usuario por Consola
