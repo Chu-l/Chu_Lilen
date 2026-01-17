@@ -31,7 +31,7 @@ let libros = [
         autor: "J. K. Rowling",
         anio: 1997,
         genero: "Fantasía",
-        disponible: true
+        disponible: false
     },
     {
         id: 2,
@@ -47,7 +47,7 @@ let libros = [
         autor: "J. R. R. Tolkien",
         anio: 1954,
         genero: "Fantasía épica",
-        disponible: true
+        disponible: false
     },
     {
         id: 4,
@@ -55,7 +55,7 @@ let libros = [
         autor: "Stephen Chbosky",
         anio: 1999,
         genero: "Juvenil",
-        disponible: false
+        disponible: true
     },
     {
         id: 5,
@@ -63,7 +63,7 @@ let libros = [
         autor: "Ken Follett",
         anio: 1989,
         genero: "Histórica",
-        disponible: true
+        disponible: false
     },
     {
         id: 6,
@@ -71,7 +71,7 @@ let libros = [
         autor: "Tad Williams",
         anio: 2017,
         genero: "Fantasía",
-        disponible: true
+        disponible: false
     },
     {
         id: 7,
@@ -87,7 +87,7 @@ let libros = [
         autor: "Christopher Paolini",
         anio: 2002,
         genero: "Fantasía",
-        disponible: false
+        disponible: true
     },
     {
         id: 9,
@@ -95,7 +95,7 @@ let libros = [
         autor: "R. A. Salvatore",
         anio: 1990,
         genero: "Fantasía",
-        disponible: true
+        disponible: false
     },
     {
         id: 10,
@@ -103,7 +103,7 @@ let libros = [
         autor: "Stephenie Meyer",
         anio: 2005,
         genero: "Fantasía romántica",
-        disponible: false
+        disponible: true
     }
 ];
 
@@ -339,6 +339,78 @@ console.log(usuarios);*/
 a) Desarrollar una función prestarLibro(idLibro, idUsuario) que marque un libro como no disponible y lo agregue a la lista de libros prestados del usuario.
 b) Implementar una función devolverLibro(idLibro, idUsuario) que marque un libro como disponible y lo elimine de la lista de libros prestados del usuario.
 */
+
+//a- La función se encarga de gestionar el préstamo de un libro. Primero busca el libro y el usuario correspondiente dentro de sus respectivos arrays. Luego verifica que el libro exista, que esté disponible y que el usuario también exista. Si se cumplen estas condiciones, marca el libro como no disponible y agrega su id al array de libros prestados del usuario.
+
+function prestarLibro(idLibro, idUsuario) {
+
+    // Buscamos el libro por su id usando find. El método find() devuelve el valor del primer elemento del array que cumple la función de prueba proporcionada.
+    let libro = libros.find(function(l) {
+        //Compara el id del libro actual (l.id) con el idLibro recibido por parámetro. Si son iguales, devuelve true. Cuando find recibe true, deja de buscar y devuelve ese objeto libro.
+        return l.id === idLibro;
+    });
+
+    // Buscamos el usuario en el array usuarios por su id
+    let usuario = usuarios.find(function(u) {
+        //Compara el id del usuario actual (u.id) con el idUsuario recibido por parámetro. Si son iguales, devuelve true. Cuando find recibe true, deja de buscar y devuelve ese objeto usuario.
+        return u.id === idUsuario;
+    });
+
+    // Verificamos que el usuario exista, el libro exista y esté disponible
+    if (libro && libro.disponible && usuario) {
+        // Agregamos el id del libro al array de libros prestados del usuario
+        usuario.librosPrestados.push(idLibro);
+        // Cambiamos el estado del libro a no disponible
+        libro.disponible = false;
+    }
+   
+}
+
+//*****Probando*****//
+/*prestarLibro(2, 1);
+console.log(usuarios);
+console.log(libros);*/
+
+//b-
+
+function devolverLibro(idLibro, idUsuario) {
+
+     // Buscamos el libro por su id en el array libros
+    let libro = libros.find(function(l) {
+        return l.id === idLibro;
+    });
+
+    // Buscamos el usuario por su id en el array usuarios
+    let usuario = usuarios.find(function(u) {
+        return u.id === idUsuario;
+    });
+
+    // Verificamos que el libro exista, que el usuario exista y que el libro NO esté disponible
+    if (libro && usuario && libro.disponible === false) {
+
+        // Cambiamos el estado del libro a disponible
+        libro.disponible = true;
+
+        // Buscamos la posición del id del libro dentro del array librosPrestados del usuario. indexOf() devuelve la posición (índice) donde se encuentra, y si no lo encientra devuelve -1.
+        let indiceLibro = usuario.librosPrestados.indexOf(idLibro);
+        //indiceLibro guarda la posición del id si el libro estaba prestado, sino guarda -1.
+
+        // Si el libro está en la lista de prestados, lo eliminamos.
+        if (indiceLibro !== -1) {
+            // El método splice() borra por posición.
+            usuario.librosPrestados.splice(indiceLibro, 1);
+        }
+    }
+};
+
+//*****Probando*****//
+/*console.log("***ANTES***")
+console.log(libros);
+console.log(usuarios);
+devolverLibro(3, 1);
+console.log("***DESPUES***")
+console.log(libros);
+console.log(usuarios);*/
 
 //•┈┈┈••✦ EJERCICIO 5 ✦••┈┈┈•//
 
