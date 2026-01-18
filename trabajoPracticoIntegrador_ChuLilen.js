@@ -371,7 +371,7 @@ function prestarLibro(idLibro, idUsuario) {
 console.log(usuarios);
 console.log(libros);*/
 
-//b-
+//b- La función se encarga de registrar la devolución de un libro por parte de un usuario. Busca el libro y el usuario por sus IDs y, si ambos existen y el libro estaba prestado (no disponible), marca el libro como disponible nuevamente y elimina ese libro del listado de libros prestados del usuario.
 
 function devolverLibro(idLibro, idUsuario) {
 
@@ -416,12 +416,78 @@ console.log(usuarios);*/
 
 /*
 5. Reportes
-a) Crear una función generarReporteLibros() que utilice métodos avanzados de arrays (.map(), .fi lter(), .reduce()) para generar un reporte con la siguiente información:
+a) Crear una función generarReporteLibros() que utilice métodos avanzados de arrays (.map(), .filter(), .reduce()) para generar un reporte con la siguiente información:
 ✔ Cantidad total de libros.
 ✔ Cantidad de libros prestados.
 ✔ Cantidad de libros por género.
 ✔ Libro más antiguo y más nuevo
 */
+
+function generarReporteLibros() {
+
+    // Para la cantidad total de libros se usa la propiedad length del array libros, length devuelve cuántos elementos hay en el array.
+    let totalLibros = libros.length;
+    // Mostramos por consola la cantidad total de libros.
+    console.log("Cantidad total de libros:", totalLibros);
+
+    //Para la cantidad de libros prestados filtramos el array libros para quedarnos solo con los que NO están disponibles.
+    let librosPrestados = libros
+    // filter() recorre todos los libros y devuelve un nuevo array con los que cumplen la condición
+    .filter(function(libro) {
+        // Si disponible es false, significa que el libro está prestado
+        return libro.disponible === false;
+    })
+    // length devuelve la cantidad de elementos del array resultante
+    .length;
+    // Mostramos por consola la cantidad total de libros prestados.
+    console.log("Cantidad total de libros prestados:", librosPrestados);
+
+    //Se utiliza reduce() para recorrer el array de libros y generar un objeto 
+    // que cuenta cuántos libros hay por cada género.
+    let librosPorGenero = libros.reduce(function(acum, libro) {
+        // Normalizamos el género (minúsculas y sin tildes)
+        let genero = normalizarTexto(libro.genero);
+        // Si el género no existe todavía, lo creamos y le asignamos el valor 1
+        if (!acum[genero]) {
+            acum[genero] = 1;
+        } else {
+            // Si el género ya existe, incrementamos el contador en 1
+            acum[genero]++;
+        }
+        // Devolvemos el acumulador actualizado para la siguiente iteración
+        return acum;
+    }, {}); // El acumulador comienza como un objeto vacío
+    // Mostramos el resultado por consola
+    console.log("Cantidad de libros por género:");
+    console.log(librosPorGenero);
+
+    // Usamos reduce para recorrer el array de libros y devolver el más nuevo y el más antiguo
+    // acum: es el acumulador, donde vamos guardando resultados parciales
+    // libro: es el libro actual que se está recorriendo en esa vuelta
+    let libroAntiguoNuevo = libros.reduce(function(acum, libro) {
+        // Si todavía no existe un libro más antiguo en el acumulador
+        // O si el año del libro actual es menor al que estaba guardado
+        if (!acum.masAntiguo || libro.anio < acum.masAntiguo.anio) {
+            // Guardamos el libro actual como el más antiguo
+            acum.masAntiguo = libro;
+        }
+        // Si todavía no existe un libro más nuevo en el acumulador
+        // O si el año del libro actual es mayor al que estaba guardado
+        if (!acum.masNuevo || libro.anio > acum.masNuevo.anio) {
+            // Guardamos el libro actual como el más nuevo
+            acum.masNuevo = libro;
+        }
+        // Devolvemos el acumulador actualizado para la siguiente iteración
+        return acum;
+    }, {}); //{} valor inicial del acumulador (objeto vacío)
+    // Mostramos los resultados por consola
+    console.log("Libro más antiguo:", libroAntiguoNuevo.masAntiguo);
+    console.log("Libro más nuevo:", libroAntiguoNuevo.masNuevo);
+
+}
+
+//*****Probando*****//
+/*generarReporteLibros(libros);*/
 
 //•┈┈┈••✦ EJERCICIO 6 ✦••┈┈┈•//
 
@@ -464,3 +530,23 @@ b) El menú debe incluir opciones para todas las funcionalidades anteriores y ut
 a) Se tomará como último punto a evaluar la correcta utilización de comentarios explicando paso por paso su código.
 b) Deberán seccionar el código punto por punto y con una explicación corta y simple de que hicieron en cada punto. (tal cómo comentaba el código de los ejercicios de cada clase)
 */
+
+//*****Funciones Auxiliares*****//
+
+// Función que normaliza un texto:
+// Primero lo pasa a minúsculas
+// Después elimina las tildes
+function normalizarTexto(texto) {
+    return texto
+        // Método que convierte todo a minúsculas.
+        .toLowerCase()                 
+        // Método que normaliza caracteres Unicode. NFD = Normalization Form Decomposition, separa la letra base de la tilde.
+        .normalize("NFD")              
+        // La parte antes de la coma es qué busco y la de después es con qué reemplazo. 
+        // [\u0300-\u036f] es una expresión que representa un rango de caracteres diacríticos (tildes, diéresis,etc.). /g flag global para indicar que se reemplacen todas las apariciones.
+        //"" es una cadena vacía, es el equivalente a borrar.
+        .replace(/[\u0300-\u036f]/g, "") 
+        // Reemplaza espacios por _
+        .replace(/\s+/g, "_");     
+}
+
