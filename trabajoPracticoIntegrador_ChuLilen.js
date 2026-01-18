@@ -484,7 +484,7 @@ function generarReporteLibros() {
     console.log("Libro más antiguo:", libroAntiguoNuevo.masAntiguo);
     console.log("Libro más nuevo:", libroAntiguoNuevo.masNuevo);
 
-}
+};
 
 //*****Probando*****//
 /*generarReporteLibros(libros);*/
@@ -496,6 +496,48 @@ function generarReporteLibros() {
 a) Implementar una función librosConPalabrasEnTitulo() que identifique y muestre todos los libros cuyo título contiene más de una palabra (no títulos que contengan números ni otros caracteres).
 b) La función debe devolver un array con los títulos de esos libros y mostrarlo en la consola.
 */
+
+function librosConPalabrasEnTitulo() {
+
+    let titulos = libros
+        // Usamos filter para recorrer el array de libros
+        //  y quedarnos solo con los que cumplen la condición
+        .filter(function(libro) {
+            // Separamos el título del libro en palabras usando split
+            // Se genera un array donde cada palabra del título es un elemento
+            let palabras = libro.titulo.split(" ");
+            // Debe tener más de una palabra sino se descarta el título
+            if (palabras.length <= 1) {
+                return false;
+            }
+            // Verificamos que ninguna palabra sea un número
+            for (let i=0; i<palabras.length; i++) {
+                if (!isNaN(palabras[i])) {
+                    return false; // descartamos este libro
+                }
+            }
+            // Si tiene más de una palabra y ninguna de ellas es un número
+            // el libro cumple la consigna
+            return true;
+        })
+
+        // Para quedarnos solo con los títulos de los libros, y no con los objetos completos uso map.
+        // Recorre el array, recibe el objeto libro y devuelve solo libro.titulo
+        .map(function(libro) {
+            return libro.titulo;
+        });
+
+    // Mostramos por consola el array de títulos obtenidos
+    console.log("Libros con más de una palabra en el título (sin números):");
+    console.log(titulos);
+
+    // Devolvemos el array de títulos
+    return titulos;
+
+};
+
+//*****Probando*****//
+librosConPalabrasEnTitulo(libros);
 
 //•┈┈┈••✦ EJERCICIO 7 ✦••┈┈┈•//
 
