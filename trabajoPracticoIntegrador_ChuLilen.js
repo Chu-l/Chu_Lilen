@@ -537,7 +537,7 @@ function librosConPalabrasEnTitulo() {
 };
 
 //*****Probando*****//
-librosConPalabrasEnTitulo(libros);
+/*librosConPalabrasEnTitulo(libros);*/
 
 //•┈┈┈••✦ EJERCICIO 7 ✦••┈┈┈•//
 
@@ -548,6 +548,16 @@ a) Desarrollar una función calcularEstadisticas() que utilice el objeto Math pa
 ✔ Año de publicación más frecuente.
 ✔ Diferencia en años entre el libro más antiguo y el más nuevo.
 */
+
+function calcularEstadisticas() {
+
+    // Promedio de años de publicación de los libros.
+
+    // Año de publicación más frecuente.
+    
+    // Diferencia en años entre el libro más antiguo y el más nuevo.
+
+};
 
 //•┈┈┈••✦ EJERCICIO 8 ✦••┈┈┈•//
 
