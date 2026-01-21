@@ -108,7 +108,7 @@ let libros = [
     {
         id: 11,
         titulo: "Parque Jurásico",
-        autor: "Michael Crichton",
+        autor: "Michael Crichton ",
         anio: 1990,
         genero: "Ciencia ficción",
         disponible: true
@@ -145,6 +145,12 @@ let usuarios = [
         id: 5,
         nombre: "Ho Win Chu",
         email: "howin@hotmail.com",
+        librosPrestados: []
+    },
+    {
+        id: 6,
+        nombre: "Nidia Desio",
+        email: "NIDIAd@Hotmail.com",
         librosPrestados: []
     }
 ];
@@ -632,7 +638,7 @@ function calcularEstadisticas() {
 };
 
 //*****Probando*****//
-calcularEstadisticas();
+/*calcularEstadisticas();*/
 
 //•┈┈┈••✦ EJERCICIO 8 ✦••┈┈┈•//
 
@@ -643,6 +649,37 @@ a) Crear una función normalizarDatos() que utilice métodos de strings para:
 ✔ Eliminar espacios en blanco al inicio y final de los nombres de autores.
 ✔ Formatear los emails de los usuarios a minúsculas.
 */
+
+function normalizarDatos() {
+
+    // ***Convertir todos los títulos de los libros a mayúsculas***
+    // Recorremos el array libros uno por uno
+    // Se quiere modificar los objetos existentes por lo que usamos .forEach
+    libros.forEach(function(libro) {
+        // toUpperCase() convierte el texto a mayúsculas
+        libro.titulo = libro.titulo.toUpperCase();
+    });
+    // ***Eliminar espacios en blanco al inicio y final del nombre del autor***
+    libros.forEach(function(libro) {
+        // trim() elimina espacios al inicio y al final del string
+        libro.autor = libro.autor.trim();
+    });
+    // ***Pasar los emails de los usuarios a minúsculas***
+    usuarios.forEach(function(usuario) {
+        // toLowerCase() convierte el texto a minúsculas
+        usuario.email = usuario.email.toLowerCase();
+    });
+
+};
+
+//*****Probando*****//
+console.log("ANTES:");
+console.log(libros);
+console.log(usuarios);
+normalizarDatos();
+console.log("DESPUÉS:");
+console.log(libros);
+console.log(usuarios);
 
 //•┈┈┈••✦ EJERCICIO 9 ✦••┈┈┈•//
 
