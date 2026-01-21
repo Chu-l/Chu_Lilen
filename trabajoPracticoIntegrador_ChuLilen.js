@@ -104,6 +104,14 @@ let libros = [
         anio: 2005,
         genero: "Fantasía romántica",
         disponible: true
+    },
+    {
+        id: 11,
+        titulo: "Parque Jurásico",
+        autor: "Michael Crichton",
+        anio: 1990,
+        genero: "Ciencia ficción",
+        disponible: true
     }
 ];
 
@@ -551,13 +559,80 @@ a) Desarrollar una función calcularEstadisticas() que utilice el objeto Math pa
 
 function calcularEstadisticas() {
 
-    // Promedio de años de publicación de los libros.
+    // ***Promedio de años de publicación de los libros***
+    // Usamos reduce para sumar todos los años de publicación
+    let sumaAnios = libros.reduce(function(acum, libro) {
+        // En cada vuelta sumamos el año del libro actual
+        return acum + libro.anio;
+    }, 0); // 0 es el valor inicial del acumulador
+    // Calculamos el promedio dividiendo la suma por la cantidad de libros 
+    // y redondeamos el resultado usando Math.round() obteniendo un entero
+    let promedio = Math.round(sumaAnios / libros.length);
+    // Mostramos el promedio en consola
+    console.log("Promedio de años de publicación: ", promedio);
 
-    // Año de publicación más frecuente.
-    
-    // Diferencia en años entre el libro más antiguo y el más nuevo.
+    // ***Año de publicación más frecuente***
+    // Creamos un objeto para contar repeticiones
+    // Usamos reduce() para recorrer el array libros
+    // acum es el acumulador, donde se irá armando un objeto con el conteo
+    // libro es el libro actual en cada iteración.
+    let contadorAnios = libros.reduce(function(acum, libro) {
+        // Condicion para verificar si el año aún no existe como propiedad en el objeto acumulador
+        // si no existe, se inicializa el conteo.
+        if (!acum[libro.anio]) {
+            // Si el año no existe, lo creamos en el objeto. 
+            // Se le asigna el valor 1 porque es la primera vez que aparece ese año.
+            acum[libro.anio] = 1;
+        } else {
+            // Si el año ya existía, incrementa el valor en 1 para sumar una nueva aparición.
+            acum[libro.anio]++;
+        }
+        // Devolvemos el acumulador actualizado.
+        return acum;
+    }, {}); // {} es el valor inicial del acumulador.
+    // Armamos un array solo con las cantidades (cuántas veces aparece cada año)
+    // Object.values() convierte los valores del objeto contadorAnios
+    // en un array con las cantidades de apariciones de cada año
+    let cantidades = Object.values(contadorAnios);
+    // Obtenemos la mayor frecuencia usando Math.max
+    let maxFrecuencia = Math.max(...cantidades); //El ... saca los valores del array y los pasa como argumentos separados
+    // Buscamos qué años tienen esa frecuencia máxima
+    // Object.keys() obtiene todas las claves de un objeto.
+    let aniosMasFrecuentes = Object
+    // Object.keys(contadorAnios) devuelve un array con todos los años.
+    .keys(contadorAnios)
+    //filter() recorre el array de años uno por uno
+    .filter(function(anio) {
+        // contadorAnios[anio] nos dice cuántas veces aparece ese año
+        // maxFrecuencia es la cantidad más alta encontrada
+        // Si ese año aparece la misma cantidad que maxFrecuencia, filter() lo incluye en el array final.
+        return contadorAnios[anio] === maxFrecuencia;
+    })
+    //Convierte cada elemento del array en un número.
+    .map(Number);
+    // Mostramos el o los años con mayor frecuencia en consola separados con comas
+    console.log("Año(s) de publicación más frecuente(s):", aniosMasFrecuentes.join(", "));
+
+    // ***Diferencia en años entre el libro más antiguo y el más nuevo***
+    // Creamos un array solo con los años de publicación de los libros
+    // map() recorre el array libros y devuelve un nuevo array con los años
+    let anios = libros.map(function(libro) {
+        return libro.anio;
+    });
+    // Obtenemos el año más antiguo (mínimo) usando Math.min
+    // El operador ... (spread) pasa los valores del array como argumentos separados
+    let anioMasAntiguo = Math.min(...anios);
+    // Obtenemos el año más nuevo o el año máximo usando Math.max
+    let anioMasNuevo = Math.max(...anios);
+    // Calculamos la diferencia
+    let diferencia = anioMasNuevo - anioMasAntiguo;
+    // Mostramos la diferencia por consola
+    console.log("Diferencia entre el libro más antiguo y el más nuevo:", diferencia);
 
 };
+
+//*****Probando*****//
+calcularEstadisticas();
 
 //•┈┈┈••✦ EJERCICIO 8 ✦••┈┈┈•//
 
