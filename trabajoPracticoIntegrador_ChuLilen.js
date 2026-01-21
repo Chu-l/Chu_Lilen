@@ -191,12 +191,21 @@ console.log(libros);*/
 function buscarLibro(criterio, valor) {
     // Array donde se guardan los resultados de la búsqueda
     let resultados = [];
+    // Normalizamos el valor ingresado por el usuario
+    let valorNormalizado = normalizarTexto(valor);
     // Recorremos el array de libros uno por uno
     for (let i=0; i<libros.length; i++) {
-        // Comparamos el valor del criterio indicado con el valor buscado
-        if (libros[i][criterio] === valor) {
-            // Si hay coincidencia, se agrega el libro al array de resultados
-            resultados.push(libros[i]);
+        // Tomamos el valor del libro según el criterio (titulo, autor o genero)
+        let datoLibro = libros[i][criterio];
+        // Verificamos que el dato exista
+        if (datoLibro) {
+            // Normalizamos el dato del libro
+            let datoNormalizado = normalizarTexto(datoLibro);
+            // Comparamos texto normalizado con texto normalizado
+            if (datoNormalizado === valorNormalizado) {
+                // Si hay coincidencia, agregamos el libro al array de resultados
+                resultados.push(libros[i]);
+            }
         }
     }
     // Se devuelve el array con los libros encontrados
@@ -305,10 +314,14 @@ function mostrarTodosLosUsuarios() {
 //c- Función que busca un usuario en el array de usuarios según su email y devuelve su información. Si no existe, retorna null.
 
 function buscarUsuario(email) {
+    // Normalizamos el email recibido por parámetro
+    let emailNormalizado = email.trim().toLowerCase();
     // Recorremos el array de usuarios uno por uno con un for
     for (let i=0; i<usuarios.length; i++) {
+        // Normalizamos el email guardado por si está mal cargado
+        let emailUsuario = usuarios[i].email.trim().toLowerCase();
         // Comparamos el email del usuario actual con el email recibido
-        if (usuarios[i].email === email) {
+        if (emailUsuario === emailNormalizado) {
             // Si coincide, devolvemos ese usuario
             return usuarios[i];
         }
@@ -326,16 +339,25 @@ console.log(buscarUsuario("null@hotmail.com"));*/
 //d- Elimina un usuario del array usuarios según nombre y email
 
 function borrarUsuario(nombre, email) {
+    // Normalizamos los parámetros recibidos
+    let nombreNormalizado = nombre.trim().toLowerCase();
+    let emailNormalizado = email.trim().toLowerCase();
     // findIndex recorre el array usuarios y devuelve la posición (índice) del primer usuario que cumpla la condición. Si no encuentra ninguno, devuelve -1.
     let indice = usuarios.findIndex(function(usuario) {
+        // Normalizamos los datos guardados del usuario
+        let nombreUsuario = usuario.nombre.trim().toLowerCase();
+        let emailUsuario = usuario.email.trim().toLowerCase();
         // En cada vuelta comparamos el nombre y el email del usuario actual con los valores recibidos por parámetro
-        return usuario.nombre === nombre && usuario.email === email;
+        return nombreUsuario === nombreNormalizado && emailUsuario === emailNormalizado;
     });
 
     // Verificamos si el usuario fue encontrado. Si se encuentra el usuario, findIndex es distinto a -1.
     if (indice !== -1) {
         // Eliminamos el usuario del array usando splice, elimina 1 elemento del array comenzando desde la posición indicada.
         usuarios.splice(indice, 1);
+        console.log("Usuario eliminado correctamente.");
+    } else {
+        console.log("Usuario no encontrado.");
     }
 };
 
@@ -673,13 +695,13 @@ function normalizarDatos() {
 };
 
 //*****Probando*****//
-console.log("ANTES:");
+/*console.log("ANTES:");
 console.log(libros);
 console.log(usuarios);
 normalizarDatos();
 console.log("DESPUÉS:");
 console.log(libros);
-console.log(usuarios);
+console.log(usuarios);*/
 
 //•┈┈┈••✦ EJERCICIO 9 ✦••┈┈┈•//
 
@@ -688,6 +710,171 @@ console.log(usuarios);
 a) Implementar una función menuPrincipal() que muestre un menú de opciones al usuario y permita interactuar con el sistema utilizando prompt().
 b) El menú debe incluir opciones para todas las funcionalidades anteriores y utilizar estructuras de control (if, switch, ciclos) para manejar la lógica.
 */
+
+// Función principal que muestra el menú y permite interactuar con el sistema
+function menuPrincipal() {
+
+    // Variable para controlar si el menú sigue activo, si vale 0 el programa termina
+    let opcion;
+
+    // Usamos un do while para que el menú se muestre al menos una vez
+    // y se repita hasta que el usuario decida salir
+    do {
+        // Mostramos el menú por consola
+        console.log("*****MENÚ PRINCIPAL*****");
+        console.log("1. Agregar libro");
+        console.log("2. Buscar libro");
+        console.log("3. Ordenar libros");
+        console.log("4. Borrar libro");
+        console.log("5. Registrar usuario");
+        console.log("6. Mostrar todos los usuarios");
+        console.log("7. Buscar usuario");
+        console.log("8. Borrar usuario");
+        console.log("9. Prestar libro");
+        console.log("10. Devolver libro");
+        console.log("11. Generar reporte de libros");
+        console.log("12. Libros con más de una palabra en el título");
+        console.log("13. Calcular estadísticas");
+        console.log("14. Normalizar datos");
+        console.log("0. Salir");
+
+        // Pedimos al usuario que ingrese una opción
+        opcion = prompt("Ingrese una opción: ");
+
+        // Convertimos la opción a número
+        opcion = Number(opcion);
+
+        // Usamos switch para manejar cada opción del menú
+        switch (opcion) {
+
+            case 1:
+                // Se piden al usuario los datos necesarios para agregar un nuevo libro
+                let id = Number(prompt("Ingrese ID del libro: "));
+                let titulo = prompt("Ingrese título: ");
+                let autor = prompt("Ingrese autor: ");
+                let anio = Number(prompt("Ingrese año de publicación: "));
+                let genero = prompt("Ingrese género: ");
+                // Se llama a la función agregarLibro con los datos ingresados
+                agregarLibro(id, titulo, autor, anio, genero);
+                // El break corta la ejecución del switch una vez que se ejecuta el case correcto
+                // y hace que el programa vuelva al menú principal
+                break;
+
+            case 2:
+                // Se le pide al usuario el criterio por el cual quiere buscar
+                // Puede ser: titulo, autor o genero
+                let criterio = prompt("Buscar por (titulo/autor/genero): ");
+                // Se le pide al usuario el valor a buscar según el criterio elegido
+                let valor = prompt("Ingrese el valor a buscar: ");
+                // Se llama a la función buscarLibro y se muestran los resultados por consola
+                console.log(buscarLibro(criterio, valor));
+                break;
+
+            case 3:
+                // Se le pide al usuario el criterio por el cual desea ordenar los libros
+                let criterioOrden = prompt("Ordenar por (titulo/anio): ");
+                // Se llama a la función ordenarLibros con el criterio ingresado
+                ordenarLibros(criterioOrden);
+                break;
+
+            case 4:
+                // Se le pide al usuario el ID del libro que desea eliminar
+                let idEliminar = Number(prompt("Ingrese el ID del libro a borrar: "));
+                // Se llama a la función borrarLibro pasando el ID ingresado
+                // La función elimina el libro del array libros si el ID existe
+                borrarLibro(idEliminar);
+                break;
+
+            case 5:
+                // Se le pide al usuario el nombre del nuevo usuario y email
+                let nombreUsuario = prompt("Ingrese nombre del usuario: ");
+                let emailUsuario = prompt("Ingrese email: ");
+                // Se llama a la función registrarUsuario para agregar el usuario al sistema
+                registrarUsuario(nombreUsuario, emailUsuario);
+                break;
+
+            case 6:
+                // Se llama a la función mostrarTodosLosUsuarios
+                // La función devuelve el array completo de usuarios registrados
+                console.log(mostrarTodosLosUsuarios());
+                break;
+
+            case 7:
+                // Se le pide al usuario el email del usuario que desea buscar
+                let emailBuscar = prompt("Ingrese email del usuario: ");
+                console.log(buscarUsuario(emailBuscar));
+                break;
+
+            case 8:
+                // Se le pide al usuario el nombre y email del usuario que desea eliminar
+                let nombreBorrar = prompt("Ingrese nombre del usuario: ");
+                let emailBorrar = prompt("Ingrese email del usuario: ");
+                // Se llama a la función borrarUsuario pasando el nombre y el email
+                // La función se encarga de buscar y eliminar el usuario correspondiente
+                borrarUsuario(nombreBorrar, emailBorrar);
+                break;
+
+            case 9:
+                // Se pide al usuario el ID del libro que se desea prestar
+                let idLibroPrestar = Number(prompt("Ingrese ID del libro: "));
+                // Se pide al usuario el ID del usuario que va a recibir el libro
+                let idUsuarioPrestar = Number(prompt("Ingrese ID del usuario: "));
+                // Se llama a la función prestarLibro, pasándole el ID del libro y del usuario
+                 // La función se encarga de marcar el libro como no disponible
+                 // y de agregarlo a la lista de libros prestados del usuario
+                prestarLibro(idLibroPrestar, idUsuarioPrestar);
+                break;
+
+            case 10:
+                // Se pide al usuario el ID del libro que se quiere devolver
+                let idLibroDevolver = Number(prompt("Ingrese ID del libro: "));
+                // Se pide al usuario el ID del usuario que devuelve el libro
+                let idUsuarioDevolver = Number(prompt("Ingrese ID del usuario: "));
+                // Se llama a la función devolverLibro con los IDs correspondientes
+                // La función se encarga de marcar el libro como disponible nuevamente
+                // y eliminarlo del array de libros prestados del usuario
+                devolverLibro(idLibroDevolver, idUsuarioDevolver);
+                break;
+
+            case 11:
+                // Llama a la función que genera distintos reportes sobre los libros
+                // (cantidad total, libros prestados, libros por género, etc.)
+                generarReporteLibros();
+                break;
+
+            case 12:
+                // Llama a la función que devuelve un array con los títulos
+                // de los libros que tienen más de una palabra en el título
+                librosConPalabrasEnTitulo();
+                break;
+
+            case 13:
+                // Llama a la función que calcula estadísticas sobre los libros
+                // (promedio de años, año más frecuente, diferencia entre el más antiguo y el más nuevo)
+                calcularEstadisticas();
+                break;
+
+            case 14:
+                // Llama a la función que normaliza los datos del sistema
+                normalizarDatos();
+                break;
+
+            case 0:
+                // Esta opción permite salir del sistema
+                console.log("Saliendo del sistema...");
+                break;
+
+            default:
+                // Este bloque se ejecuta cuando el usuario ingresa
+                // un número que no coincide con ningún case válido
+                console.log("Opción inválida. Intente nuevamente.");
+        }
+
+    } while (opcion !== 0); // El menú se repite hasta que el usuario elija salir
+}
+
+// Llamamos a la función principal para iniciar el programa
+menuPrincipal();
 
 /*
 10. Comentando mi código
@@ -709,7 +896,9 @@ function normalizarTexto(texto) {
         // La parte antes de la coma es qué busco y la de después es con qué reemplazo. 
         // [\u0300-\u036f] es una expresión que representa un rango de caracteres diacríticos (tildes, diéresis,etc.). /g flag global para indicar que se reemplacen todas las apariciones.
         //"" es una cadena vacía, es el equivalente a borrar.
-        .replace(/[\u0300-\u036f]/g, "") 
+        .replace(/[\u0300-\u036f]/g, "")
+        // Elimina espacios en blanco al inicio y al final 
+        .trim()
         // Reemplaza espacios por _
         .replace(/\s+/g, "_");     
 }
