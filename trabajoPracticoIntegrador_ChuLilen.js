@@ -1,12 +1,14 @@
 const prompt = require('prompt-sync')();
 
-//Objetivo: Desarrollar un sistema de gestión para una biblioteca que permita administrar libros y usuarios, aplicando los conceptos fundamentales de JavaScript vistos en el módulo.
+//Objetivo: Desarrollar un sistema de gestión para una biblioteca que permita administrar libros y usuarios, 
+// aplicando los conceptos fundamentales de JavaScript vistos en el módulo.
 
 //•┈┈┈••✦ EJERCICIO 1 ✦••┈┈┈•//
 
 /*
 1. Estructura de Datos
-a) Crear un array de objetos llamado libros que contenga al menos 10 libros. Cada libro debe tener las siguientes propiedades:
+a) Crear un array de objetos llamado libros que contenga al menos 10 libros. 
+Cada libro debe tener las siguientes propiedades:
 ✔ id (número)
 ✔ título (string),
 ✔ autor (string),
@@ -20,8 +22,11 @@ b) Crear un array de objetos llamado usuarios con al menos 5 usuarios. Cada usua
 ✔ librosPrestados (array de ids de libros).
 */
 
-/* Un array es una estructura de datos que sirve para guardar varios valores relacionados en una sola variable. Un array puede guardar cualquier tipo de dato.
-Para este ejercicio se crean dos arrays, uno que contiene libros y otro va a contener usuarios. Cada elemento es un objeto con propiedades concretas dadas en el enunciado, los tipos de datos de las propiedades son string, number, boolean (simples) y array (complejo).*/
+/* Un array es una estructura de datos que sirve para guardar varios valores relacionados en una sola variable. 
+Un array puede guardar cualquier tipo de dato.
+Para este ejercicio se crean dos arrays, uno que contiene libros y otro va a contener usuarios. 
+Cada elemento es un objeto con propiedades concretas dadas en el enunciado, los tipos de datos de las 
+propiedades son string, number, boolean (simples) y array (complejo).*/
 
 //Array de objetos Libros
 let libros = [
@@ -160,8 +165,10 @@ let usuarios = [
 /*
 2. Funciones de Gestión de Libros
 a) Implementar una función agregarLibro(id, titulo, autor, anio, genero) que agregue un nuevo libro al array libros.
-b) Crear una función buscarLibro(criterio, valor) que permita buscar libros por título, autor o género utilizando el algoritmo de búsqueda lineal.
-c) Desarrollar una función ordenarLibros(criterio) que ordene los libros por título o año utilizando el algoritmo de ordenamiento burbuja (bubble sort) y luego muestre los libros ordenados en la consola.
+b) Crear una función buscarLibro(criterio, valor) que permita buscar libros por título, autor o género 
+utilizando el algoritmo de búsqueda lineal.
+c) Desarrollar una función ordenarLibros(criterio) que ordene los libros por título o año utilizando
+el algoritmo de ordenamiento burbuja (bubble sort) y luego muestre los libros ordenados en la consola.
 d) Desarrollar una función borrarLibro(id) que elimine el libro que se le pase por parámetro.
 */
 
@@ -186,7 +193,9 @@ agregarLibro(12, "La isla del tesoro", "Robert Louis Stevenson", 1883, "Aventura
 // Mostrar el contenido del array para comprobar
 console.log(libros);*/
 
-//b- Buscar libros por título, autor o género. Se hace una búsqueda lineal, es decir, se recorre la lista de libros elemento por elemento (en orden), hasta encontrar lo que busca o hasta llegar al final. Se genera un nuevo array con los resultados de la búsqueda.
+//b- Buscar libros por título, autor o género. Se hace una búsqueda lineal, es decir, 
+// se recorre la lista de libros elemento por elemento (en orden), hasta encontrar lo que busca o 
+// hasta llegar al final. Se genera un nuevo array con los resultados de la búsqueda.
 
 function buscarLibro(criterio, valor) {
     // Array donde se guardan los resultados de la búsqueda
@@ -218,17 +227,22 @@ console.log(buscarLibro("autor", "J. R. R. Tolkien"));
 //Búsqueda por género
 console.log(buscarLibro("genero", "Fantasía"));*/
 
-//c- Ordenar los libros por título o año utilizando el algoritmo de ordenamiento burbuja (bubble sort), luego se muestra los libros ordenados en la consola. El método de burbuja compara los elementos de a pares y los intercambia si están en el orden incorrecto, repitiendo el proceso hasta que la lista queda ordenada.
+//c- Ordenar los libros por título o año utilizando el algoritmo de ordenamiento burbuja (bubble sort), 
+// luego se muestra los libros ordenados en la consola. El método de burbuja compara los elementos 
+// de a pares y los intercambia si están en el orden incorrecto, repitiendo el proceso
+// hasta que la lista queda ordenada.
 
 function ordenarLibros(criterio) {
     let n = libros.length;
     // Bucle externo que controla cuántas veces recorremos la lista completa de libros.
     for (let i = 0; i < n - 1; i++) {
-        // Bucle interno que compara de a pares. A medida que pasan las vueltas, los mayores se acomodan al final.
+        // Bucle interno que compara de a pares. A medida que pasan las vueltas, 
+        // los mayores se acomodan al final.
         for (let j = 0; j < n - i - 1; j++) {
             // Si el valor del criterio del libro actual es mayor que el siguiente, están desordenados.
             if (libros[j][criterio] > libros[j + 1][criterio]) {
-                // Se utiliza una variable auxiliar para guardar temporalmente el libro actual y poder intercambiarlo.
+                // Se utiliza una variable auxiliar para guardar temporalmente el libro actual 
+                // y poder intercambiarlo.
                 let aux = libros[j];
                 libros[j] = libros[j + 1];
                 libros[j + 1] = aux;
@@ -253,7 +267,8 @@ function ordenarLibros(criterio) {
 function borrarLibro(id) {
     //Recorremos el array de libros uno por uno
     for (let i = 0; i < libros.length; i++) {
-        //Comparamos el id del libro actual con el id recibido por parámetro, si los ids coinciden, eliminamos ese libro del array
+        //Comparamos el id del libro actual con el id recibido por parámetro, si los ids coinciden, 
+        // eliminamos ese libro del array
         if (libros[i].id === id) {
             // splice(i, 1) borra 1 elemento en la posición i
             libros.splice(i, 1);
@@ -280,7 +295,8 @@ c) Crear una función buscarUsuario(email) que devuelva la información de un us
 d) Implementar una función borrarUsuario(nombre, email) que elimine el usuario seleccionado.
 */
 
-//a- La función crea un objeto usuario con los datos recibidos y lo agrega al array usuarios utilizando el método push.
+//a- La función crea un objeto usuario con los datos recibidos y lo agrega al array usuarios 
+// utilizando el método push.
 
 function registrarUsuario(nombre, email) {
     // Se crea un objeto con los datos del nuevo usuario
@@ -301,7 +317,8 @@ registrarUsuario("Ailin Aguilar", "ailinca@gmail.com");
 console.log("Usuarios después:");
 console.log(usuarios);*/
 
-//b- La función no recibe parámetros, ya que no necesita información adicional para ejecutarse. Retorna el array "usuarios" con todos los usuarios registrados.
+//b- La función no recibe parámetros, ya que no necesita información adicional para ejecutarse. 
+// Retorna el array "usuarios" con todos los usuarios registrados.
 
 function mostrarTodosLosUsuarios() {
     // Devuelve el array completo de usuarios
@@ -311,7 +328,8 @@ function mostrarTodosLosUsuarios() {
 //*****Probando*****//
 /*console.log(mostrarTodosLosUsuarios());*/
 
-//c- Función que busca un usuario en el array de usuarios según su email y devuelve su información. Si no existe, retorna null.
+//c- Función que busca un usuario en el array de usuarios según su email y devuelve su información. 
+// Si no existe, retorna null.
 
 function buscarUsuario(email) {
     // Normalizamos el email recibido por parámetro
@@ -342,7 +360,8 @@ function borrarUsuario(nombre, email) {
     // Normalizamos los parámetros recibidos
     let nombreNormalizado = nombre.trim().toLowerCase();
     let emailNormalizado = email.trim().toLowerCase();
-    // findIndex recorre el array usuarios y devuelve la posición (índice) del primer usuario que cumpla la condición. Si no encuentra ninguno, devuelve -1.
+    // findIndex recorre el array usuarios y devuelve la posición (índice) del primer usuario que 
+    // cumpla la condición. Si no encuentra ninguno, devuelve -1.
     let indice = usuarios.findIndex(function(usuario) {
         // Normalizamos los datos guardados del usuario
         let nombreUsuario = usuario.nombre.trim().toLowerCase();
@@ -353,7 +372,8 @@ function borrarUsuario(nombre, email) {
 
     // Verificamos si el usuario fue encontrado. Si se encuentra el usuario, findIndex es distinto a -1.
     if (indice !== -1) {
-        // Eliminamos el usuario del array usando splice, elimina 1 elemento del array comenzando desde la posición indicada.
+        // Eliminamos el usuario del array usando splice, elimina 1 elemento del array comenzando 
+        // desde la posición indicada.
         usuarios.splice(indice, 1);
         console.log("Usuario eliminado correctamente.");
     } else {
@@ -372,23 +392,31 @@ console.log(usuarios);*/
 
 /*
 4. Sistema de Préstamos
-a) Desarrollar una función prestarLibro(idLibro, idUsuario) que marque un libro como no disponible y lo agregue a la lista de libros prestados del usuario.
-b) Implementar una función devolverLibro(idLibro, idUsuario) que marque un libro como disponible y lo elimine de la lista de libros prestados del usuario.
+a) Desarrollar una función prestarLibro(idLibro, idUsuario) que marque un libro como no disponible y 
+lo agregue a la lista de libros prestados del usuario.
+b) Implementar una función devolverLibro(idLibro, idUsuario) que marque un libro como disponible y lo 
+elimine de la lista de libros prestados del usuario.
 */
 
-//a- La función se encarga de gestionar el préstamo de un libro. Primero busca el libro y el usuario correspondiente dentro de sus respectivos arrays. Luego verifica que el libro exista, que esté disponible y que el usuario también exista. Si se cumplen estas condiciones, marca el libro como no disponible y agrega su id al array de libros prestados del usuario.
+//a- La función se encarga de gestionar el préstamo de un libro. Primero busca el libro y el usuario 
+// correspondiente dentro de sus respectivos arrays. Luego verifica que el libro exista, que esté 
+// disponible y que el usuario también exista. Si se cumplen estas condiciones, marca el libro como no 
+// disponible y agrega su id al array de libros prestados del usuario.
 
 function prestarLibro(idLibro, idUsuario) {
 
-    // Buscamos el libro por su id usando find. El método find() devuelve el valor del primer elemento del array que cumple la función de prueba proporcionada.
+    // Buscamos el libro por su id usando find. El método find() devuelve el valor del primer elemento 
+    // del array que cumple la función de prueba proporcionada.
     let libro = libros.find(function(l) {
-        //Compara el id del libro actual (l.id) con el idLibro recibido por parámetro. Si son iguales, devuelve true. Cuando find recibe true, deja de buscar y devuelve ese objeto libro.
+        //Compara el id del libro actual (l.id) con el idLibro recibido por parámetro. Si son iguales, 
+        // devuelve true. Cuando find recibe true, deja de buscar y devuelve ese objeto libro.
         return l.id === idLibro;
     });
 
     // Buscamos el usuario en el array usuarios por su id
     let usuario = usuarios.find(function(u) {
-        //Compara el id del usuario actual (u.id) con el idUsuario recibido por parámetro. Si son iguales, devuelve true. Cuando find recibe true, deja de buscar y devuelve ese objeto usuario.
+        //Compara el id del usuario actual (u.id) con el idUsuario recibido por parámetro. Si son iguales, 
+        // devuelve true. Cuando find recibe true, deja de buscar y devuelve ese objeto usuario.
         return u.id === idUsuario;
     });
 
@@ -407,7 +435,9 @@ function prestarLibro(idLibro, idUsuario) {
 console.log(usuarios);
 console.log(libros);*/
 
-//b- La función se encarga de registrar la devolución de un libro por parte de un usuario. Busca el libro y el usuario por sus IDs y, si ambos existen y el libro estaba prestado (no disponible), marca el libro como disponible nuevamente y elimina ese libro del listado de libros prestados del usuario.
+//b- La función se encarga de registrar la devolución de un libro por parte de un usuario. 
+// Busca el libro y el usuario por sus IDs y, si ambos existen y el libro estaba prestado (no disponible), 
+// marca el libro como disponible nuevamente y elimina ese libro del listado de libros prestados del usuario.
 
 function devolverLibro(idLibro, idUsuario) {
 
@@ -427,7 +457,8 @@ function devolverLibro(idLibro, idUsuario) {
         // Cambiamos el estado del libro a disponible
         libro.disponible = true;
 
-        // Buscamos la posición del id del libro dentro del array librosPrestados del usuario. indexOf() devuelve la posición (índice) donde se encuentra, y si no lo encientra devuelve -1.
+        // Buscamos la posición del id del libro dentro del array librosPrestados del usuario. 
+        // indexOf() devuelve la posición (índice) donde se encuentra, y si no lo encientra devuelve -1.
         let indiceLibro = usuario.librosPrestados.indexOf(idLibro);
         //indiceLibro guarda la posición del id si el libro estaba prestado, sino guarda -1.
 
@@ -452,7 +483,8 @@ console.log(usuarios);*/
 
 /*
 5. Reportes
-a) Crear una función generarReporteLibros() que utilice métodos avanzados de arrays (.map(), .filter(), .reduce()) para generar un reporte con la siguiente información:
+a) Crear una función generarReporteLibros() que utilice métodos avanzados de arrays (.map(), .filter(), 
+.reduce()) para generar un reporte con la siguiente información:
 ✔ Cantidad total de libros.
 ✔ Cantidad de libros prestados.
 ✔ Cantidad de libros por género.
@@ -461,12 +493,14 @@ a) Crear una función generarReporteLibros() que utilice métodos avanzados de a
 
 function generarReporteLibros() {
 
-    // Para la cantidad total de libros se usa la propiedad length del array libros, length devuelve cuántos elementos hay en el array.
+    // Para la cantidad total de libros se usa la propiedad length del array libros, length devuelve 
+    // cuántos elementos hay en el array.
     let totalLibros = libros.length;
     // Mostramos por consola la cantidad total de libros.
     console.log("Cantidad total de libros:", totalLibros);
 
-    //Para la cantidad de libros prestados filtramos el array libros para quedarnos solo con los que NO están disponibles.
+    //Para la cantidad de libros prestados filtramos el array libros para quedarnos solo con 
+    // los que NO están disponibles.
     let librosPrestados = libros
     // filter() recorre todos los libros y devuelve un nuevo array con los que cumplen la condición
     .filter(function(libro) {
@@ -529,7 +563,8 @@ function generarReporteLibros() {
 
 /*
 6. Identificación Avanzada de libros
-a) Implementar una función librosConPalabrasEnTitulo() que identifique y muestre todos los libros cuyo título contiene más de una palabra (no títulos que contengan números ni otros caracteres).
+a) Implementar una función librosConPalabrasEnTitulo() que identifique y muestre todos los libros cuyo 
+título contiene más de una palabra (no títulos que contengan números ni otros caracteres).
 b) La función debe devolver un array con los títulos de esos libros y mostrarlo en la consola.
 */
 
@@ -623,7 +658,8 @@ function calcularEstadisticas() {
     // en un array con las cantidades de apariciones de cada año
     let cantidades = Object.values(contadorAnios);
     // Obtenemos la mayor frecuencia usando Math.max
-    let maxFrecuencia = Math.max(...cantidades); //El ... saca los valores del array y los pasa como argumentos separados
+    // El ... saca los valores del array y los pasa como argumentos separados
+    let maxFrecuencia = Math.max(...cantidades); 
     // Buscamos qué años tienen esa frecuencia máxima
     // Object.keys() obtiene todas las claves de un objeto.
     let aniosMasFrecuentes = Object
@@ -707,8 +743,10 @@ console.log(usuarios);*/
 
 /*
 9. Interfaz de Usuario por Consola
-a) Implementar una función menuPrincipal() que muestre un menú de opciones al usuario y permita interactuar con el sistema utilizando prompt().
-b) El menú debe incluir opciones para todas las funcionalidades anteriores y utilizar estructuras de control (if, switch, ciclos) para manejar la lógica.
+a) Implementar una función menuPrincipal() que muestre un menú de opciones al usuario y permita 
+interactuar con el sistema utilizando prompt().
+b) El menú debe incluir opciones para todas las funcionalidades anteriores y utilizar estructuras de 
+control (if, switch, ciclos) para manejar la lógica.
 */
 
 // Función principal que muestra el menú y permite interactuar con el sistema
@@ -878,8 +916,10 @@ menuPrincipal();
 
 /*
 10. Comentando mi código
-a) Se tomará como último punto a evaluar la correcta utilización de comentarios explicando paso por paso su código.
-b) Deberán seccionar el código punto por punto y con una explicación corta y simple de que hicieron en cada punto. (tal cómo comentaba el código de los ejercicios de cada clase)
+a) Se tomará como último punto a evaluar la correcta utilización de comentarios explicando 
+paso por paso su código.
+b) Deberán seccionar el código punto por punto y con una explicación corta y simple de que 
+hicieron en cada punto. (tal cómo comentaba el código de los ejercicios de cada clase)
 */
 
 //*****Funciones Auxiliares*****//
@@ -891,10 +931,12 @@ function normalizarTexto(texto) {
     return texto
         // Método que convierte todo a minúsculas.
         .toLowerCase()                 
-        // Método que normaliza caracteres Unicode. NFD = Normalization Form Decomposition, separa la letra base de la tilde.
+        // Método que normaliza caracteres Unicode. NFD = Normalization Form Decomposition, separa la 
+        // letra base de la tilde.
         .normalize("NFD")              
         // La parte antes de la coma es qué busco y la de después es con qué reemplazo. 
-        // [\u0300-\u036f] es una expresión que representa un rango de caracteres diacríticos (tildes, diéresis,etc.). /g flag global para indicar que se reemplacen todas las apariciones.
+        // [\u0300-\u036f] es una expresión que representa un rango de caracteres diacríticos (tildes, 
+        // diéresis,etc.). /g flag global para indicar que se reemplacen todas las apariciones.
         //"" es una cadena vacía, es el equivalente a borrar.
         .replace(/[\u0300-\u036f]/g, "")
         // Elimina espacios en blanco al inicio y al final 
